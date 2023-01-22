@@ -1,0 +1,3 @@
+Add property "checked" fo every elemnt in array + check is one record default
+@Track listViews = [];
+this.listViews = this.listViews.map(n => ({ ...n, checked: n.Is_Default__c }));
