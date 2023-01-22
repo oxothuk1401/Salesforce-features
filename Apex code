@@ -1,0 +1,23 @@
+Set<Id> clonedRecordIds = new Set<Id>{'a2P5r000000zU7nEAE'};
+List<List_View__c> listViews = [
+    SELECT Id, Name, Is_Default__c, List_View_Api_Name__c, Object_Api_Name__c, Condition__c,
+    	(SELECT Id, List_View__c, Cell_Attributes__c, Field_Name__c, Fixed_Width__c, Icon_Name__c, Is_Editable__c, Is_Header_Label_Hidden__c, Is_Sortable__c, Order__c, Type_Attributes__c, Type__c, Name FROM Columns__r LIMIT 200) 
+    FROM List_View__c 
+	WHERE Id IN :clonedRecordIds
+	LIMIT 200
+];
+
+List<List_View__c> clone = listViews.deepClone();
+insert clone;
+
+List<Column__c> clonedColumns = new List<Column__c>();
+for (Integer i = 0; i < clone.size(); i++) {
+	List<Column__c> tempChildRecords = clone[i].Columns__r.deepClone();
+    for (Column__c newChildRecord : tempChildRecords) {
+        newChildRecord.List_View__c = clone[i].Id;
+    }
+	
+	clonedColumns.addAll(tempChildRecords);
+}
+
+insert clonedColumns;
