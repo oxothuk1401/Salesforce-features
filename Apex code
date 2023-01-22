@@ -1,3 +1,4 @@
+//CLONE records with child records
 Set<Id> clonedRecordIds = new Set<Id>{'a2P5r000000zU7nEAE'};
 List<List_View__c> listViews = [
     SELECT Id, Name, Is_Default__c, List_View_Api_Name__c, Object_Api_Name__c, Condition__c,
@@ -21,3 +22,13 @@ for (Integer i = 0; i < clone.size(); i++) {
 }
 
 insert clonedColumns;
+
+===================================================================================================================================================================================================
+//CLONE one or several records
+
+List<Programme__c> progrmamms = [
+	SELECT Id, Programme_Configuration__c, Account__c, Start_Date__c, End_Date__c, Programme_Type__c, Location__c, Day_One__c, Day_Two__c, Day_Three__c, Day_Four__c, Day_Five__c, Teacher_Email_Address__c, Teacher_Contact_Phone__c, Target_Volunteer_Audience__c, Publish_Immediately__c, Assigned_Volunteer__c, Info__c, Status__c, The_cancellation_is_on_behalf_of_the__c, Reason__c, Further_Information__c, Will_you_be_republishing_this_programme__c, Teacher_Name__c, Volunteer__c, Pupil__c, Completed_Sessions__c, Canceled_Sessions__c, Auto_roll_programme_forward__c, Name 
+	FROM Programme__c 
+	LIMIT 1];
+List<Programme__c> cloned = progrmamms.deepClone();
+insert cloned;
